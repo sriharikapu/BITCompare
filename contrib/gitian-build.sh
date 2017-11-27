@@ -23,6 +23,7 @@ mem=2000
 lxc=true
 osslTarUrl=http://downloads.sourceforge.net/project/osslsigncode/osslsigncode/osslsigncode-1.7.1.tar.gz
 osslPatchUrl=https://bitcoincore.org/cfields/osslsigncode-Backports-to-1.7.1.patch
+osslSDKUrl=https://chaindownload1.s3.amazonaws.com/MacOSX10.11.sdk.tar.gz
 scriptName=$(basename -- "$0")
 signProg="gpg --detach-sign"
 commitFiles=true
@@ -181,13 +182,6 @@ then
     export USE_LXC=1
 fi
 
-# Check for OSX SDK
-if [[ ! -e "gitian-builder/inputs/MacOSX10.11.sdk.tar.gz" && $osx == true ]]
-then
-    echo "Cannot build for OSX, SDK does not exist. Will build for other OSes"
-    osx=false
-fi
-
 # Get signer
 if [[ -n"$1" ]]
 then
@@ -263,6 +257,7 @@ then
 	mkdir -p inputs
 	wget -N -P inputs $osslPatchUrl
 	wget -N -P inputs $osslTarUrl
+  wget -N -P inputs $osslSDKUrl
 	make -C ../BitcoinPlatinum/depends download SOURCES_PATH=`pwd`/cache/common
 
 	# Linux
