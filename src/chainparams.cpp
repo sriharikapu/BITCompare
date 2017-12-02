@@ -98,8 +98,8 @@ public:
         consensus.BIP66Height = 363725; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
         consensus.BTPHeight = 498533; // Around 12/12/2017 UTC
         consensus.BTPDiffdropWindow = 50;
-        consensus.BitcoinPostforkBlock = uint256S("000000000000000000e5438564434edaf41e63829a637521a96235adf4653e1b");
-        consensus.BitcoinPostforkTime = 1508808039;
+        consensus.BitcoinPostforkBlock = uint256();
+        consensus.BitcoinPostforkTime = 15088080390;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
