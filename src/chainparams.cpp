@@ -97,15 +97,15 @@ public:
         consensus.BIP65Height = 388381; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
         consensus.BIP66Height = 363725; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
         consensus.BTPHeight = 498533; // Around 12/12/2017 UTC
-        consensus.BTPDiffdropWindow = 50;
+        consensus.BTPDiffdropWindow = 100;
         consensus.BitcoinPostforkBlock = uint256();
-        consensus.BitcoinPostforkTime = 15088080390;
+        consensus.BitcoinPostforkTime = 2008808039;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
         //based on https://github.com/BitcoinPlatinum/BitcoinPlatinum/issues/78
-        consensus.nPowAveragingWindow = 30;
+        consensus.nPowAveragingWindow = 70;
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 32;
         consensus.nPowMaxAdjustUp = 16;
@@ -222,15 +222,15 @@ public:
         consensus.BIP65Height = 581885; // 00000000007f6655f22f98e72ed80d8b06dc761d5da09df0fa1dc4be4f861eb6
         consensus.BIP66Height = 330776; // 000000002104c8c45e99a8853285a3b592602a3ccde2b832481da85e9e4ba182
         consensus.BTPHeight = 12103200;
-        consensus.BTPDiffdropWindow = 50;
+        consensus.BTPDiffdropWindow = 100;
         consensus.BitcoinPostforkBlock = uint256();
-        consensus.BitcoinPostforkTime = 15081113380;
+        consensus.BitcoinPostforkTime = 2008808039;
         consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
         //based on https://github.com/BitcoinPlatinum/BitcoinPlatinum/issues/78
-        consensus.nPowAveragingWindow = 30;
+        consensus.nPowAveragingWindow = 70;
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 32;
         consensus.nPowMaxAdjustUp = 16;
@@ -330,15 +330,15 @@ public:
         consensus.BIP34Hash = uint256();
         consensus.BIP65Height = 1351; // BIP65 activated on regtest (Used in rpc activation tests)
         consensus.BIP66Height = 1251; // BIP66 activated on regtest (Used in rpc activation tests)
-        consensus.BTPDiffdropWindow = 10;
-        consensus.BTPHeight = 3000;
+        consensus.BTPDiffdropWindow = 100;
+        consensus.BTPHeight = 0; //always enabled by default
         consensus.BitcoinPostforkBlock = uint256();
         consensus.BitcoinPostforkTime = 0;
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         //based on https://github.com/BitcoinPlatinum/BitcoinPlatinum/issues/78
-        consensus.nPowAveragingWindow = 30;
+        consensus.nPowAveragingWindow = 70;
         consensus.nPowMaxAdjustDown = 16;
         consensus.nPowMaxAdjustUp = 32;
         consensus.nPowTargetBlockTime = 2.5 * 60;
