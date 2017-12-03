@@ -104,7 +104,7 @@ public:
         consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
-        //based on https://github.com/BitcoinPlatinum/BitcoinPlatinum/issues/78
+        //based on https://github.com/BTCGPU/BTCGPU/issues/78
         consensus.nPowAveragingWindow = 70;
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 32;
@@ -229,7 +229,7 @@ public:
         consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
-        //based on https://github.com/BitcoinPlatinum/BitcoinPlatinum/issues/78
+        //based on https://github.com/BTCGPU/BTCGPU/issues/78
         consensus.nPowAveragingWindow = 70;
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 32;
@@ -337,7 +337,7 @@ public:
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitStart = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.powLimitLegacy = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        //based on https://github.com/BitcoinPlatinum/BitcoinPlatinum/issues/78
+        //based on https://github.com/BTCGPU/BTCGPU/issues/78
         consensus.nPowAveragingWindow = 70;
         consensus.nPowMaxAdjustDown = 16;
         consensus.nPowMaxAdjustUp = 32;

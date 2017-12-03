@@ -29,7 +29,7 @@ Build Bitcoin Core
 
 1. Clone the Bitcoin Platinum source code and cd into `bitcoinplatinum`
 
-        git clone https://github.com/bitcoinplatinum/btcpgu
+        git clone https://github.com/bitcoinplatinum/bitcoinplatinum
         cd bitcoinplatinum
 
 2.  Build bitcoinplatinum:
