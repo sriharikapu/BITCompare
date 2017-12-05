@@ -36,7 +36,7 @@ Check out the source code in the following directory hierarchy.
     git clone https://github.com/BitcoinPlatinum/gitian.sigs.git
     git clone https://github.com/BitcoinPlatinum/bitcoin-detached-sigs.git
     git clone https://github.com/devrandom/gitian-builder.git
-    git clone https://github.com/bitcoin/bitcoin.git
+    git clone https://github.com/BitcoinPlatinum/BitcoinPlatinum.git
 
 ### Bitcoin maintainers/release engineers, suggestion for writing release notes
 
