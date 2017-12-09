@@ -288,7 +288,7 @@ public:
         // nodes with support for servicebits filtering should be at the top
         // If your want to add your dnsseed, make a pr or contract wjcloud <shnano1128@naver.com>
         // You can use -bootstrap options as well.
-        vSeeds.emplace_back("test-korea-dnsseed.btcplt.org", true); // wjcloud <shnano1128@naver.com>sx
+        vSeeds.emplace_back("test-korea-dnsseed.btcplt.org", true); // wjcloud <shnano1128@naver.com>
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
@@ -314,6 +314,118 @@ public:
             1501802953,
             14706531,
             0.15
+        };
+    }
+};
+
+/**
+ * Testnet (v7)
+ */
+class CTestNet7Params : public CChainParams {
+public:
+    CTestNet7Params() {
+        strNetworkID = "test7";
+        consensus.nSubsidyHalvingInterval = 210000;
+        consensus.BIP34Height = 0;
+        consensus.BIP34Hash = uint256();
+        consensus.BIP65Height = 0;
+        consensus.BIP66Height = 0;
+        consensus.BTPHeight = 10;
+        consensus.BTPDiffdropWindow = 100;
+        consensus.BitcoinPostforkBlock = uint256();
+        consensus.BitcoinPostforkTime = 2008808039;
+        consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+
+        //based on https://github.com/BTCGPU/BTCGPU/issues/78
+        consensus.nPowAveragingWindow = 10;
+        assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
+        consensus.nPowMaxAdjustDown = 32;
+        consensus.nPowMaxAdjustUp = 16;
+        consensus.nPowTargetBlockTime = 2.5 * 60;
+
+        consensus.nPowTargetTimespanLegacy = 14 * 24 * 60 * 60; // two weeks
+        consensus.nPowTargetSpacingLegacy = 10 * 60;
+        consensus.fPowAllowMinDifficultyBlocks = true;
+        consensus.fPowNoRetargeting = false;
+        consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
+        consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespanLegacy / nPowTargetSpacingLegacy
+        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
+        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
+        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
+
+        // Deployment of BIP68, BIP112, and BIP113.
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1456790400; // March 1st, 2016
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1493596800; // May 1st, 2017
+
+        // Deployment of SegWit (BIP141, BIP143, and BIP147)
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].bit = 1;
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1462060800; // May 1st 2016
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1493596800; // May 1st 2017
+
+        // The best chain should have at least this much work.
+        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000002830dab7f76dbb7d63");
+
+        // By default assume that the signatures in ancestors of this block are valid.
+        consensus.defaultAssumeValid = uint256();
+
+
+        pchMessageStartLegacy[0] = 0x0b;
+        pchMessageStartLegacy[1] = 0xc2;
+        pchMessageStartLegacy[2] = 0xac;
+        pchMessageStartLegacy[3] = 0x41;
+
+        pchMessageStart[0] = 0x0b;
+        pchMessageStart[1] = 0xc2;
+        pchMessageStart[2] = 0xac;
+        pchMessageStart[3] = 0x41;
+        nDefaultPort = 4491;
+        nBitcoinDefaultPort = 4491;
+        nPruneAfterHeight = 1000;
+        const size_t N = 200, K = 9;  // Same as mainchain.
+        BOOST_STATIC_ASSERT(equihash_parameters_acceptable(N, K));
+        nEquihashN = N;
+        nEquihashK = K;
+
+        genesis = CreateGenesisBlock(1296688602, 414098458, 0x1d00ffff, 1, 50 * COIN);
+        consensus.hashGenesisBlock = genesis.GetHash(consensus);
+        assert(consensus.hashGenesisBlock == uint256S("0x000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943"));
+        assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+
+        // nodes with support for servicebits filtering should be at the top
+        // If your want to add your dnsseed, make a pr or contract wjcloud <shnano1128@naver.com>
+        // You can use -bootstrap options as well.
+        // vSeeds.emplace_back("test-korea-dnsseed.btcplt.org", true); // wjcloud <shnano1128@naver.com>
+
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
+        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
+        base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
+        base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
+
+        vFixedSeeds.clear();
+        vSeeds.clear();
+
+        // vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
+
+        fDefaultConsistencyChecks = false;
+        fRequireStandard = false;
+        fMineBlocksOnDemand = false;
+
+
+        checkpointData = (CCheckpointData) {
+            {
+                {0, uint256()},
+            }
+        };
+
+        chainTxData = ChainTxData{
+            // Data as of block (height )
+            0,
+            0,
+            0
         };
     }
 };
@@ -428,6 +540,8 @@ std::unique_ptr<CChainParams> CreateChainParams(const std::string& chain)
         return std::unique_ptr<CChainParams>(new CMainParams());
     else if (chain == CBaseChainParams::TESTNET)
         return std::unique_ptr<CChainParams>(new CTestNetParams());
+    else if (chain == CBaseChainParams::TESTNET7)
+        return std::unique_ptr<CChainParams>(new CTestNet7Params());
     else if (chain == CBaseChainParams::REGTEST)
         return std::unique_ptr<CChainParams>(new CRegTestParams());
     throw std::runtime_error(strprintf("%s: Unknown chain %s.", __func__, chain));
