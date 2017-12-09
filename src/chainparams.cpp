@@ -327,19 +327,19 @@ public:
         strNetworkID = "test7";
         consensus.nSubsidyHalvingInterval = 210000;
         consensus.BIP34Height = 0;
-        consensus.BIP34Hash = uint256();
+        consensus.BIP34Hash = uint256S("0x5d668649d5f302ebb64a34b29b3bf5eebce89e91e72875095b8002293ee352b9");
         consensus.BIP65Height = 0;
         consensus.BIP66Height = 0;
         consensus.BTPHeight = 10;
-        consensus.BTPDiffdropWindow = 100;
+        consensus.BTPDiffdropWindow = 10;
         consensus.BitcoinPostforkBlock = uint256();
         consensus.BitcoinPostforkTime = 2008808039;
-        consensus.powLimit = uint256S("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.powLimitStart = uint256S("0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.powLimitLegacy = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimitStart = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimitLegacy = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
         //based on https://github.com/BTCGPU/BTCGPU/issues/78
-        consensus.nPowAveragingWindow = 10;
+        consensus.nPowAveragingWindow = 70;
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.nPowMaxAdjustDown = 32;
         consensus.nPowMaxAdjustUp = 16;
@@ -366,10 +366,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1493596800; // May 1st 2017
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000002830dab7f76dbb7d63");
+        consensus.nMinimumChainWork = uint256S("0x00");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256();
+        consensus.defaultAssumeValid = uint256S("0x00");
 
 
         pchMessageStartLegacy[0] = 0x0b;
@@ -389,9 +389,9 @@ public:
         nEquihashN = N;
         nEquihashK = K;
 
-        genesis = CreateGenesisBlock(1296688602, 414098458, 0x1d00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1512838800, 2, 0x207fffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash(consensus);
-        assert(consensus.hashGenesisBlock == uint256S("0x000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943"));
+        assert(consensus.hashGenesisBlock == uint256S("0x5d668649d5f302ebb64a34b29b3bf5eebce89e91e72875095b8002293ee352b9"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
         // nodes with support for servicebits filtering should be at the top
@@ -417,7 +417,7 @@ public:
 
         checkpointData = (CCheckpointData) {
             {
-                {0, uint256()},
+                {0, uint256S("5d668649d5f302ebb64a34b29b3bf5eebce89e91e72875095b8002293ee352b9")},
             }
         };
 
@@ -442,7 +442,7 @@ public:
         consensus.BIP34Hash = uint256();
         consensus.BIP65Height = 1351; // BIP65 activated on regtest (Used in rpc activation tests)
         consensus.BIP66Height = 1251; // BIP66 activated on regtest (Used in rpc activation tests)
-        consensus.BTPDiffdropWindow = 100;
+        consensus.BTPDiffdropWindow = 10;
         consensus.BTPHeight = 3000;
         consensus.BitcoinPostforkBlock = uint256();
         consensus.BitcoinPostforkTime = 0;
