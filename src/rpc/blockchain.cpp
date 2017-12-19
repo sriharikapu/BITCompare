@@ -1551,7 +1551,12 @@ UniValue getchaintxstats(const JSONRPCRequest& request)
         );
 
     const CBlockIndex* pindex;
-    int blockcount = 30 * 24 * 60 * 60 / Params().GetConsensus().nPowTargetSpacingLegacy; // By default: 1 month
+    int blockcount;
+    if (pindex->nHeight < 498533) {
+        blockcount = 30 * 24 * 60 * 60 / Params().GetConsensus().nPowTargetSpacingLegacy; // By default: 1 month
+    } else {
+        blockcount = 30 * 24 * 60 * 60 / Params().GetConsensus().nPowTargetBlockTime; // By default: 1 month
+    }  
 
     if (request.params.size() > 0 && !request.params[0].isNull()) {
         blockcount = request.params[0].get_int();

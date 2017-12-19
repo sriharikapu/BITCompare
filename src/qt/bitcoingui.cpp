@@ -32,6 +32,7 @@
 #endif
 
 #include "chainparams.h"
+#include "chain.h"
 #include "init.h"
 #include "ui_interface.h"
 #include "util.h"
@@ -755,9 +756,16 @@ void BitcoinGUI::updateHeadersSyncProgressLabel()
 {
     int64_t headersTipTime = clientModel->getHeaderTipTime();
     int headersTipHeight = clientModel->getHeaderTipHeight();
-    int estHeadersLeft = (GetTime() - headersTipTime) / Params().GetConsensus().nPowTargetSpacingLegacy;
-    if (estHeadersLeft > HEADER_HEIGHT_DELTA_SYNC)
-        progressBarLabel->setText(tr("Syncing Headers (%1%)...").arg(QString::number(100.0 / (headersTipHeight+estHeadersLeft)*headersTipHeight, 'f', 1)));
+    CBlockIndex bindex;
+    if (bindex.nHeight < 498533) {
+        const int estHeadersLeft = (GetTime() - headersTipTime) / Params().GetConsensus().nPowTargetSpacingLegacy;
+        if (estHeadersLeft > HEADER_HEIGHT_DELTA_SYNC)
+            progressBarLabel->setText(tr("Syncing Headers (%1%)...").arg(QString::number(100.0 / (headersTipHeight+estHeadersLeft)*headersTipHeight, 'f', 1)));
+    } else {
+        const int estHeadersLeft = (GetTime() - headersTipTime) / Params().GetConsensus().nPowTargetBlockTime;
+        if (estHeadersLeft > HEADER_HEIGHT_DELTA_SYNC)
+            progressBarLabel->setText(tr("Syncing Headers (%1%)...").arg(QString::number(100.0 / (headersTipHeight+estHeadersLeft)*headersTipHeight, 'f', 1)));
+    }  
 }
 
 void BitcoinGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, bool header)
