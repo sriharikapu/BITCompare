@@ -1,83 +1,99 @@
-Bitcoin Core version *0.15.0.1* is now available from:
+Dash Core version 0.12.3.3
+==========================
 
-  <https://bitcoin.org/bin/bitcoin-core-0.15.0.1/>
+Release is now available from:
 
-This is a minor bug fix for 0.15.0.
+  <https://www.dash.org/downloads/#wallets>
 
-Please report bugs using the issue tracker at GitHub:
+This is a critical bugfix release.
 
-  <https://github.com/bitcoin/bitcoin/issues>
+Please report bugs using the issue tracker at github:
 
-To receive security and update notifications, please subscribe to:
+  <https://github.com/dashpay/dash/issues>
 
-  <https://bitcoincore.org/en/list/announcements/join/>
+
+Upgrading and downgrading
+=========================
 
 How to Upgrade
-==============
+--------------
 
 If you are running an older version, shut it down. Wait until it has completely
-shut down (which might take a few minutes for older versions), then run the 
-installer (on Windows) or just copy over `/Applications/Bitcoin-Qt` (on Mac)
-or `bitcoind`/`bitcoin-qt` (on Linux).
+shut down (which might take a few minutes for older versions), then run the
+installer (on Windows) or just copy over /Applications/Dash-Qt (on Mac) or
+dashd/dash-qt (on Linux).
 
-The first time you run version 0.15.0 or higher, your chainstate database will
-be converted to a new format, which will take anywhere from a few minutes to
-half an hour, depending on the speed of your machine.
+Downgrade warning
+-----------------
 
-The file format of `fee_estimates.dat` changed in version 0.15.0. Hence, a
-downgrade from version 0.15.0 or upgrade to version 0.15.0 will cause all fee
-estimates to be discarded.
+### Downgrade to a version < 0.12.2.2
 
-Note that the block database format also changed in version 0.8.0 and there is no
-automatic upgrade code from before version 0.8 to version 0.15.0. Upgrading
-directly from 0.7.x and earlier without redownloading the blockchain is not supported.
-However, as usual, old wallet versions are still supported.
+Because release 0.12.2.2 included the [per-UTXO fix](release-notes/dash/release-notes-0.12.2.2.md#per-utxo-fix)
+which changed the structure of the internal database, you will have to reindex
+the database if you decide to use any pre-0.12.2.2 version.
 
-Downgrading warning
--------------------
+Wallet forward or backward compatibility was not affected.
 
-The chainstate database for this release is not compatible with previous
-releases, so if you run 0.15 and then decide to switch back to any
-older version, you will need to run the old release with the `-reindex-chainstate`
-option to rebuild the chainstate data structures in the old format.
+### Downgrade to 0.12.2.2/3, 0.12.3.1/2
 
-If your node has pruning enabled, this will entail re-downloading and
-processing the entire blockchain.
+Downgrading to these versions does not require any additional actions, should be
+fully compatible.
 
-Compatibility
-==============
-
-Bitcoin Core is extensively tested on multiple operating systems using
-the Linux kernel, macOS 10.8+, and Windows Vista and later. Windows XP is not supported.
-
-Bitcoin Core should also work on most other Unix-like systems but is not
-frequently tested on them.
 
 Notable changes
 ===============
 
-GUI startup crash issue
--------------------------
+Fix crash bug with duplicate inputs within a transaction
+--------------------------------------------------------
 
-After upgrade to 0.15.0, some clients would crash at startup because a custom
-fee setting was configured that no longer exists in the GUI. This is a minimal
-patch to avoid this issue from occuring.
+There was a critical bug discovered in Bitcoin Core's codebase recently which
+can cause node receiving a block to crash https://github.com/bitcoin/bitcoin/pull/14247
 
-0.15.0.1 Change log
-====================
+0.12.3.3 Change log
+===================
 
--  #11332 `46c8d23` Fix possible crash with invalid nCustomFeeRadio in QSettings (achow101, TheBlueMatt)
-
-Also the manpages were updated, as this was forgotten for 0.15.0.
+See detailed [set of changes](https://github.com/dashpay/dash/compare/v0.12.3.2...dashpay:v0.12.3.3).
 
 Credits
 =======
 
-Thanks to everyone who directly contributed to this release:
+Thanks to everyone who directly contributed to this release,
+as well as everyone who submitted issues and reviewed pull requests.
 
-- Andrew Chow
-- Matt Corallo
-- Jonas Schnelli
-- Wladimir J. van der Laan
 
-As well as everyone that helped translating on [Transifex](https://www.transifex.com/projects/p/bitcoin/).
+Older releases
+==============
+
+Dash was previously known as Darkcoin.
+
+Darkcoin tree 0.8.x was a fork of Litecoin tree 0.8, original name was XCoin
+which was first released on Jan/18/2014.
+
+Darkcoin tree 0.9.x was the open source implementation of masternodes based on
+the 0.8.x tree and was first released on Mar/13/2014.
+
+Darkcoin tree 0.10.x used to be the closed source implementation of Darksend
+which was released open source on Sep/25/2014.
+
+Dash Core tree 0.11.x was a fork of Bitcoin Core tree 0.9,
+Darkcoin was rebranded to Dash.
+
+Dash Core tree 0.12.0.x was a fork of Bitcoin Core tree 0.10.
+
+Dash Core tree 0.12.1.x was a fork of Bitcoin Core tree 0.12.
+
+These release are considered obsolete. Old release notes can be found here:
+
+- [v0.12.3.2](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.12.3.2.md) released Jul/09/2018
+- [v0.12.3.1](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.12.3.1.md) released Jul/03/2018
+- [v0.12.2.3](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.12.2.3.md) released Jan/12/2018
+- [v0.12.2.2](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.12.2.2.md) released Dec/17/2017
+- [v0.12.2](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.12.2.md) released Nov/08/2017
+- [v0.12.1](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.12.1.md) released Feb/06/2017
+- [v0.12.0](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.12.0.md) released Jun/15/2015
+- [v0.11.2](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.11.2.md) released Mar/04/2015
+- [v0.11.1](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.11.1.md) released Feb/10/2015
+- [v0.11.0](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.11.0.md) released Jan/15/2015
+- [v0.10.x](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.10.0.md) released Sep/25/2014
+- [v0.9.x](https://github.com/dashpay/dash/blob/master/doc/release-notes/dash/release-notes-0.9.0.md) released Mar/13/2014
+

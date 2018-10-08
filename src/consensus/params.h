@@ -1,5 +1,5 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2016 The Bitcoin Core developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -16,7 +16,8 @@ enum DeploymentPos
 {
     DEPLOYMENT_TESTDUMMY,
     DEPLOYMENT_CSV, // Deployment of BIP68, BIP112, and BIP113.
-    DEPLOYMENT_SEGWIT, // Deployment of BIP141, BIP143, and BIP147.
+    DEPLOYMENT_DIP0001, // Deployment of DIP0001 and lower transaction fees.
+    DEPLOYMENT_BIP147, // Deployment of BIP147 (NULLDUMMY)
     // NOTE: Also add new deployments to VersionBitsDeploymentInfo in versionbits.cpp
     MAX_VERSION_BITS_DEPLOYMENTS
 };
@@ -31,6 +32,10 @@ struct BIP9Deployment {
     int64_t nStartTime;
     /** Timeout/expiry MedianTime for the deployment attempt. */
     int64_t nTimeout;
+    /** The number of past blocks (including the block under consideration) to be taken into account for locking in a fork. */
+    int64_t nWindowSize;
+    /** A number of blocks, in the range of 1..nWindowSize, which must signal for a fork in order to lock it in. */
+    int64_t nThreshold;
 };
 
 /**
@@ -38,7 +43,22 @@ struct BIP9Deployment {
  */
 struct Params {
     uint256 hashGenesisBlock;
+    uint256 hashDevnetGenesisBlock;
     int nSubsidyHalvingInterval;
+    int nMasternodePaymentsStartBlock;
+    int nMasternodePaymentsIncreaseBlock;
+    int nMasternodePaymentsIncreasePeriod; // in blocks
+    int nInstantSendConfirmationsRequired; // in blocks
+    int nInstantSendKeepLock; // in blocks
+    int nBudgetPaymentsStartBlock;
+    int nBudgetPaymentsCycleBlocks;
+    int nBudgetPaymentsWindowBlocks;
+    int nSuperblockStartBlock;
+    uint256 nSuperblockStartHash;
+    int nSuperblockCycle; // in blocks
+    int nGovernanceMinQuorum; // Min absolute vote count to trigger an action
+    int nGovernanceFilterElements;
+    int nMasternodeMinimumConfirmations;
     /** Block height and hash at which BIP34 becomes active */
     int BIP34Height;
     uint256 BIP34Hash;
@@ -46,45 +66,29 @@ struct Params {
     int BIP65Height;
     /** Block height at which BIP66 becomes active */
     int BIP66Height;
-    /** Block height at which Bitcoin Platinum hard fork becomes active */
-    int BTPHeight;
-    /** Mining blocks for Bitcoin Platinum hard fork **/
-    int BTPDiffdropWindow;
-    /** The first post-fork block of Bitcoin blockchain. **/
-    uint256 BitcoinPostforkBlock;
-    uint32_t BitcoinPostforkTime;
+    /** Block height at which DIP0001 becomes active */
+    int DIP0001Height;
     /**
-     * Minimum blocks including miner confirmation of the total of 2016 blocks in a retargeting period,
-     * (nPowTargetTimespan / nPowTargetSpacingLegacy) which is also used for BIP9 deployments.
+     * Minimum blocks including miner confirmation of the total of nMinerConfirmationWindow blocks in a retargeting period,
+     * (nPowTargetTimespan / nPowTargetSpacing) which is also used for BIP9 deployments.
+     * Default BIP9Deployment::nThreshold value for deployments where it's not specified and for unknown deployments.
      * Examples: 1916 for 95%, 1512 for testchains.
      */
     uint32_t nRuleChangeActivationThreshold;
+    // Default BIP9Deployment::nWindowSize value for deployments where it's not specified and for unknown deployments.
     uint32_t nMinerConfirmationWindow;
     BIP9Deployment vDeployments[MAX_VERSION_BITS_DEPLOYMENTS];
     /** Proof of work parameters */
     uint256 powLimit;
-    uint256 powLimitLegacy;
-    uint256 powLimitStart;
-
-    const uint256& PowLimit(bool postfork) const { return postfork ? powLimit : powLimitLegacy; }
     bool fPowAllowMinDifficultyBlocks;
     bool fPowNoRetargeting;
-    int64_t nPowTargetSpacingLegacy;
-    int64_t nPowTargetTimespanLegacy;
-    int64_t DifficultyAdjustmentInterval() const { return nPowTargetTimespanLegacy / nPowTargetSpacingLegacy; }
+    int64_t nPowTargetSpacing;
+    int64_t nPowTargetTimespan;
+    int nPowKGWHeight;
+    int nPowDGWHeight;
+    int64_t DifficultyAdjustmentInterval() const { return nPowTargetTimespan / nPowTargetSpacing; }
     uint256 nMinimumChainWork;
     uint256 defaultAssumeValid;
-
-    //Zcash logic for diff adjustment
-    int64_t nPowAveragingWindow;
-    int64_t nPowMaxAdjustDown;
-    int64_t nPowMaxAdjustUp;
-    int64_t nPowTargetBlockTime;
-    int64_t AveragingWindowTimespan() const { return nPowAveragingWindow * nPowTargetBlockTime; }
-    int64_t MinActualTimespan() const { return (AveragingWindowTimespan() * (100 - nPowMaxAdjustUp  )) / 100; }
-    int64_t MaxActualTimespan() const { return (AveragingWindowTimespan() * (100 + nPowMaxAdjustDown)) / 100; }
-
-
 };
 } // namespace Consensus
 
