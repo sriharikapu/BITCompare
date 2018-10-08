@@ -1,13 +1,10 @@
 WINDOWS BUILD NOTES
 ====================
 
-Below are some notes on how to build Bitcoin Core for Windows.
+Below are some notes on how to build Dash Core for Windows.
 
 Most developers use cross-compilation from Ubuntu to build executables for
 Windows. This is also used to build the release binaries.
-
-Currently only building on Ubuntu Xenial 16.04 is supported.
-Other versions are unsupported or known to be broken (e.g. Ubuntu Xenial 16.04).
 
 While there are potentially a number of ways to build on Windows (for example using msys / mingw-w64),
 using the Windows Subsystem For Linux is the most straightforward. If you are building with
@@ -81,7 +78,7 @@ Then build using:
 
 To build executables for Windows 32-bit, install the following dependencies:
 
-    sudo apt-get install g++-mingw-w64-i686 mingw-w64-i686-dev
+    sudo apt-get install g++-mingw-w64-i686 mingw-w64-i686-dev 
 
 Then build using:
 
@@ -102,6 +99,6 @@ Installation
 After building using the Windows subsystem it can be useful to copy the compiled
 executables to a directory on the windows drive in the same directory structure
 as they appear in the release `.zip` archive. This can be done in the following
-way. This will install to `c:\workspace\bitcoin`, for example:
+way. This will install to `c:\workspace\dash`, for example:
 
-    make install DESTDIR=/mnt/c/workspace/bitcoin
+    make install DESTDIR=/mnt/c/workspace/dash
