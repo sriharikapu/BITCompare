@@ -12,12 +12,14 @@
 
 const std::string CBaseChainParams::MAIN = "main";
 const std::string CBaseChainParams::TESTNET = "test";
+const std::string CBaseChainParams::TESTNET7 = "test7";
 const std::string CBaseChainParams::REGTEST = "regtest";
 
 void AppendParamsHelpMessages(std::string& strUsage, bool debugHelp)
 {
     strUsage += HelpMessageGroup(_("Chain selection options:"));
     strUsage += HelpMessageOpt("-testnet", _("Use the test chain"));
+    strUsage += HelpMessageOpt("-testnet7", _("Use the test7 network"));
     if (debugHelp) {
         strUsage += HelpMessageOpt("-regtest", "Enter regression test mode, which uses a special chain in which blocks can be solved instantly. "
                                    "This is intended for regression testing tools and app development.");
@@ -49,6 +51,19 @@ public:
     }
 };
 
+/**
+ * Testnet (v7)
+ */
+class CBaseTestNet7Params : public CBaseChainParams
+{
+public:
+    CBaseTestNet7Params()
+    {
+        nRPCPort = 18332;
+        strDataDir = "testnet7";
+    }
+};
+
 /*
  * Regression test
  */
@@ -76,6 +91,8 @@ std::unique_ptr<CBaseChainParams> CreateBaseChainParams(const std::string& chain
         return std::unique_ptr<CBaseChainParams>(new CBaseMainParams());
     else if (chain == CBaseChainParams::TESTNET)
         return std::unique_ptr<CBaseChainParams>(new CBaseTestNetParams());
+    else if (chain == CBaseChainParams::TESTNET7)
+        return std::unique_ptr<CBaseChainParams>(new CBaseTestNet7Params());
     else if (chain == CBaseChainParams::REGTEST)
         return std::unique_ptr<CBaseChainParams>(new CBaseRegTestParams());
     else
@@ -91,12 +108,19 @@ std::string ChainNameFromCommandLine()
 {
     bool fRegTest = gArgs.GetBoolArg("-regtest", false);
     bool fTestNet = gArgs.GetBoolArg("-testnet", false);
+    bool fTestNet7 = gArgs.GetBoolArg("-testnet7", false);
 
     if (fTestNet && fRegTest)
         throw std::runtime_error("Invalid combination of -regtest and -testnet.");
+    if (fTestNet && fTestNet7)
+        throw std::runtime_error("Invalid combination of -testnet and -testnet7.");
+    if (fTestNet7 && fRegTest)
+        throw std::runtime_error("Invalid combination of -regtest and -testnet7.");
     if (fRegTest)
         return CBaseChainParams::REGTEST;
     if (fTestNet)
         return CBaseChainParams::TESTNET;
+    if (fTestNet7)
+        return CBaseChainParams::TESTNET7;
     return CBaseChainParams::MAIN;
 }
